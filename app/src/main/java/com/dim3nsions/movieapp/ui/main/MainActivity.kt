@@ -1,8 +1,8 @@
-package com.dim3nsions.movieapp
+package com.dim3nsions.movieapp.ui.main
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import com.dim3nsions.movieapp.ui.main.MainFragment
+import com.dim3nsions.movieapp.R
 
 class MainActivity : AppCompatActivity() {
 
