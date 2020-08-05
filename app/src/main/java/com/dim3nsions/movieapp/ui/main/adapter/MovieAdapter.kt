@@ -49,4 +49,8 @@ class MovieAdapter(private val listener: MovieAdapterListener) :
             binding.ivMovie.loadUrl("https://image.tmdb.org/t/p/w185/${movie.posterPath}")
         }
     }
+
+    fun clear() {
+        items = listOf()
+    }
 }

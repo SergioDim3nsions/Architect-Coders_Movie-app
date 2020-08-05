@@ -11,7 +11,7 @@ import com.dim3nsions.movieapp.databinding.MainFragmentBinding
 import com.dim3nsions.movieapp.startActivity
 import com.dim3nsions.movieapp.ui.detail.ui.detail.MovieDetailActivity
 import com.dim3nsions.movieapp.ui.main.adapter.MovieAdapter
-import kotlinx.android.synthetic.main.main_fragment.*
+import com.google.android.material.tabs.TabLayout
 
 class MainFragment : Fragment() {
 
@@ -33,11 +33,32 @@ class MainFragment : Fragment() {
         return binding.root
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        binding.rvMovie.adapter = adapter
+        binding.tlMovies.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
+            override fun onTabReselected(tab: TabLayout.Tab) {
+            }
+
+            override fun onTabUnselected(tab: TabLayout.Tab) {
+            }
+
+            override fun onTabSelected(tab: TabLayout.Tab) {
+                adapter.clear()
+                when (tab.position) {
+                    0 -> viewModel.getNowPlaying()
+                    1 -> viewModel.getPopular()
+                    2 -> viewModel.getUpcoming()
+                    3 -> viewModel.getTopRated()
+                }
+            }
+        })
+    }
+
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         viewModel = ViewModelProvider(this)[MainViewModel::class.java]
         initObservers()
-        rvMovie.adapter = adapter
     }
 
     private fun initObservers() {
