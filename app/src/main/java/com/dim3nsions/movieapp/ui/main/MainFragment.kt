@@ -4,12 +4,9 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.LinearLayout
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.dim3nsions.movieapp.databinding.MainFragmentBinding
 import com.dim3nsions.movieapp.ui.main.adapter.MovieAdapter
 import kotlinx.android.synthetic.main.main_fragment.*
@@ -38,7 +35,6 @@ class MainFragment : Fragment() {
         initObservers()
 
         rvMovie.adapter = adapter
-        viewModel.getMovies()
     }
 
     private fun initObservers() {
@@ -50,7 +46,7 @@ class MainFragment : Fragment() {
         })
 
         viewModel.nowPlaying.observe(viewLifecycleOwner, Observer { items ->
-            adapter.addItems(items)
+            adapter.items = items
         })
     }
 

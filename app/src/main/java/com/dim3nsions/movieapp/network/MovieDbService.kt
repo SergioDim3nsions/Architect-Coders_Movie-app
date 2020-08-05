@@ -8,7 +8,7 @@ import retrofit2.http.Query
 
 interface Endpoints {
 
-    interface Movie {
+    interface Movies {
         companion object {
             const val NOW_PLAYING = "movie/now_playing"
         }
@@ -16,7 +16,8 @@ interface Endpoints {
 }
 
 interface MovieDbService {
-
-    @GET(Endpoints.Movie.NOW_PLAYING)
-    suspend fun getNowPlaying(@Query("api_key") apiKey: String = API_KEY): PaginatedResponse<Movie>
+    @GET(Endpoints.Movies.NOW_PLAYING)
+    suspend fun getNowPlaying(
+        @Query("api_key") apiKey: String = API_KEY
+    ): PaginatedResponse<Movie>
 }
