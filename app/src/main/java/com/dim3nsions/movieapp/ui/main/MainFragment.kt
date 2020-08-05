@@ -37,7 +37,6 @@ class MainFragment : Fragment() {
         super.onActivityCreated(savedInstanceState)
         viewModel = ViewModelProvider(this)[MainViewModel::class.java]
         initObservers()
-
         rvMovie.adapter = adapter
     }
 

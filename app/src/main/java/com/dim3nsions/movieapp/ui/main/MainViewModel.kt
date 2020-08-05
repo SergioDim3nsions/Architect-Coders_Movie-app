@@ -23,10 +23,37 @@ class MainViewModel(private val moviesRepository: MoviesRepository = MoviesRepos
         getNowPlaying()
     }
 
-    private fun getNowPlaying() {
+    fun getNowPlaying() {
         viewModelScope.launch {
             isLoading.value = true
             val response = withContext(Dispatchers.IO) { moviesRepository.getNowPlaying() }
+            _nowPlaying.postValue(response.results)
+            isLoading.value = false
+        }
+    }
+
+    fun getPopular() {
+        viewModelScope.launch {
+            isLoading.value = true
+            val response = withContext(Dispatchers.IO) { moviesRepository.getPopular() }
+            _nowPlaying.postValue(response.results)
+            isLoading.value = false
+        }
+    }
+
+    fun getUpcoming() {
+        viewModelScope.launch {
+            isLoading.value = true
+            val response = withContext(Dispatchers.IO) { moviesRepository.getUpcoming() }
+            _nowPlaying.postValue(response.results)
+            isLoading.value = false
+        }
+    }
+
+    fun getTopRated() {
+        viewModelScope.launch {
+            isLoading.value = true
+            val response = withContext(Dispatchers.IO) { moviesRepository.getTopRated() }
             _nowPlaying.postValue(response.results)
             isLoading.value = false
         }

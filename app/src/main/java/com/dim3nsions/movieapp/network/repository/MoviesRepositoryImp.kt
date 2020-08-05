@@ -13,6 +13,9 @@ interface MoviesRepository {
     }
 
     suspend fun getNowPlaying(): PaginatedResponse<Movie>
+    suspend fun getPopular(): PaginatedResponse<Movie>
+    suspend fun getUpcoming(): PaginatedResponse<Movie>
+    suspend fun getTopRated(): PaginatedResponse<Movie>
 }
 
 class MoviesRepositoryImp(private val restManager: RestManager = RestManager) :
@@ -20,4 +23,13 @@ class MoviesRepositoryImp(private val restManager: RestManager = RestManager) :
 
     override suspend fun getNowPlaying(): PaginatedResponse<Movie> =
         restManager.service.getNowPlaying()
+
+    override suspend fun getPopular(): PaginatedResponse<Movie> =
+        restManager.service.getPopular()
+
+    override suspend fun getUpcoming(): PaginatedResponse<Movie> =
+        restManager.service.getUpcoming()
+
+    override suspend fun getTopRated(): PaginatedResponse<Movie> =
+        restManager.service.getTopRated()
 }

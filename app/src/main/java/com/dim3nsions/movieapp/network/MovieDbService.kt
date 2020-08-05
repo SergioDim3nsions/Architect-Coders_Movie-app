@@ -11,13 +11,32 @@ interface Endpoints {
     interface Movies {
         companion object {
             const val NOW_PLAYING = "movie/now_playing"
+            const val POPULAR = "movie/popular"
+            const val UPCOMING = "movie/upcoming"
+            const val TOP_RATED = "movie/top_rated"
         }
     }
 }
 
 interface MovieDbService {
+
     @GET(Endpoints.Movies.NOW_PLAYING)
     suspend fun getNowPlaying(
+        @Query("api_key") apiKey: String = API_KEY
+    ): PaginatedResponse<Movie>
+
+    @GET(Endpoints.Movies.POPULAR)
+    suspend fun getPopular(
+        @Query("api_key") apiKey: String = API_KEY
+    ): PaginatedResponse<Movie>
+
+    @GET(Endpoints.Movies.UPCOMING)
+    suspend fun getUpcoming(
+        @Query("api_key") apiKey: String = API_KEY
+    ): PaginatedResponse<Movie>
+
+    @GET(Endpoints.Movies.TOP_RATED)
+    suspend fun getTopRated(
         @Query("api_key") apiKey: String = API_KEY
     ): PaginatedResponse<Movie>
 }
