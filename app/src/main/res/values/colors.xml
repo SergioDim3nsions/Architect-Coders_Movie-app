@@ -1,6 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#6200EE</color>
-    <color name="colorPrimaryDark">#3700B3</color>
-    <color name="colorAccent">#03DAC5</color>
+    <color name="primary">#61afda</color>
+    <color name="primary_disabled">#C7E3F2</color>
+    <color name="primary_hover">#5091B5</color>
+
+
+    <color name="secondary">#364550</color>
+    <color name="secondary_disabled">#B7BCC0</color>
+    <color name="secondary_disabled_light">#EEEEEE</color>
+    <color name="secondary_hover">#2D3942</color>
+
+
+    <color name="tertiary_1">#FF6D61</color>
+    <color name="tertiary_disabled_1">#FFCCC7</color>
+    <color name="tertiary_hover_1">#D45A50</color>
+
+    <color name="tertiary_2">#FFB509</color>
+    <color name="tertiary_disabled_2">#FFE5A9</color>
+    <color name="tertiary_hover_2">#D49607</color>
+
+    <color name="tertiary_3">#57CFAD</color>
+    <color name="tertiary_disabled_3">#C4EEE2</color>
+    <color name="tertiary_hover_3">#48AC8F</color>
+
+    <color name="tertiary_4">#7117E5</color>
+    <color name="tertiary_disabled_4">#CDAEF5</color>
+    <color name="tertiary_hover_4">#5D13BE</color>
+
+
+    <color name="black">#10212e</color>
+    <color name="white">#FFFFFF</color>
+
+
+    <color name="background">#FFFFFF</color>
+    <color name="background_on">#10212e</color>
+
+
+    <color name="error">#CF496C</color>
+
+    <color name="black_90">#E610212E</color>
+    <color name="black_50">#8010212E</color>
 </resources>

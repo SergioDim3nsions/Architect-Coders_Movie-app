@@ -7,10 +7,13 @@ import androidx.recyclerview.widget.RecyclerView
 import com.dim3nsions.movieapp.R
 import com.dim3nsions.movieapp.databinding.ViewMovieItemBinding
 import com.dim3nsions.movieapp.inflate
+import com.dim3nsions.movieapp.loadUrl
 import com.dim3nsions.movieapp.ui.model.Movie
 import kotlin.properties.Delegates
 
-class MovieAdapter() :
+typealias MovieAdapterListener = (Movie) -> Unit
+
+class MovieAdapter(private val listener: MovieAdapterListener) :
     RecyclerView.Adapter<MovieAdapter.ViewHolder>() {
 
     var items: List<Movie> by Delegates.observable(emptyList()) { _, old, new ->
@@ -31,15 +34,19 @@ class MovieAdapter() :
 
     override fun getItemCount() = items.count()
 
-    override fun onBindViewHolder(holder: ViewHolder, position: Int) =
-        holder.displayItems(items[position])
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        val movie = items[position]
+        holder.displayItems(movie)
+        holder.itemView.setOnClickListener { listener(movie) }
+    }
 
     inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 
         private val binding = ViewMovieItemBinding.bind(view)
 
         fun displayItems(movie: Movie) {
-            binding.title.text = movie.title
+            binding.tvTitle.text = movie.title
+            binding.ivMovie.loadUrl("https://image.tmdb.org/t/p/w185/${movie.posterPath}")
         }
     }
 }

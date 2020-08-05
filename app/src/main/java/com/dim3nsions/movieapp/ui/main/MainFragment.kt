@@ -8,6 +8,8 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.dim3nsions.movieapp.databinding.MainFragmentBinding
+import com.dim3nsions.movieapp.startActivity
+import com.dim3nsions.movieapp.ui.detail.ui.detail.MovieDetailActivity
 import com.dim3nsions.movieapp.ui.main.adapter.MovieAdapter
 import kotlinx.android.synthetic.main.main_fragment.*
 
@@ -17,7 +19,9 @@ class MainFragment : Fragment() {
         fun newInstance() = MainFragment()
     }
 
-    private val adapter = MovieAdapter()
+    private val adapter = MovieAdapter {
+        activity?.startActivity<MovieDetailActivity>()
+    }
     private lateinit var viewModel: MainViewModel
     private lateinit var binding: MainFragmentBinding
 
