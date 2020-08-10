@@ -20,7 +20,9 @@ class MainFragment : Fragment() {
     }
 
     private val adapter = MovieAdapter {
-        activity?.startActivity<MovieDetailActivity>()
+        activity?.startActivity<MovieDetailActivity>(
+            MovieDetailActivity.EXTRA_MOVIE to it
+        )
     }
     private lateinit var viewModel: MainViewModel
     private lateinit var binding: MainFragmentBinding
