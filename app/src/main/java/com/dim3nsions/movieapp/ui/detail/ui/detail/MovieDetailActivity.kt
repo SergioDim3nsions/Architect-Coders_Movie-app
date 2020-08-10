@@ -3,7 +3,7 @@ package com.dim3nsions.movieapp.ui.detail.ui.detail
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.dim3nsions.movieapp.R
-import com.dim3nsions.movieapp.ui.model.Movie
+import com.dim3nsions.movieapp.network.model.MoviePreview
 
 class MovieDetailActivity : AppCompatActivity() {
 
@@ -18,7 +18,7 @@ class MovieDetailActivity : AppCompatActivity() {
     }
 
     private fun initFragment() {
-        val movie = intent.extras?.getParcelable<Movie>(EXTRA_MOVIE)
+        val movie = intent.extras?.getParcelable<MoviePreview>(EXTRA_MOVIE)
         supportFragmentManager.beginTransaction()
             .replace(R.id.container, MovieDetailFragment.newInstance(movie))
             .commitNow()

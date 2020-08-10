@@ -8,15 +8,15 @@ import com.dim3nsions.movieapp.R
 import com.dim3nsions.movieapp.databinding.ViewMovieItemBinding
 import com.dim3nsions.movieapp.inflate
 import com.dim3nsions.movieapp.loadUrl
-import com.dim3nsions.movieapp.ui.model.Movie
+import com.dim3nsions.movieapp.network.model.MoviePreview
 import kotlin.properties.Delegates
 
-typealias MovieAdapterListener = (Movie) -> Unit
+typealias MovieAdapterListener = (MoviePreview) -> Unit
 
 class MovieAdapter(private val listener: MovieAdapterListener) :
     RecyclerView.Adapter<MovieAdapter.ViewHolder>() {
 
-    var items: List<Movie> by Delegates.observable(emptyList()) { _, old, new ->
+    var items: List<MoviePreview> by Delegates.observable(emptyList()) { _, old, new ->
         DiffUtil.calculateDiff(object : DiffUtil.Callback() {
             override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int) =
                 old[oldItemPosition].id == new[newItemPosition].id
@@ -44,7 +44,7 @@ class MovieAdapter(private val listener: MovieAdapterListener) :
 
         private val binding = ViewMovieItemBinding.bind(view)
 
-        fun displayItems(movie: Movie) {
+        fun displayItems(movie: MoviePreview) {
             binding.tvTitle.text = movie.title
             binding.ivMovie.loadUrl("https://image.tmdb.org/t/p/w185/${movie.posterPath}")
         }

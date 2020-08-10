@@ -5,7 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.dim3nsions.movieapp.network.repository.MoviesRepository
-import com.dim3nsions.movieapp.ui.model.Movie
+import com.dim3nsions.movieapp.network.model.MoviePreview
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -15,8 +15,8 @@ class MainViewModel(private val moviesRepository: MoviesRepository = MoviesRepos
 
     val isLoading = MutableLiveData<Boolean>()
 
-    private val _nowPlaying = MutableLiveData<List<Movie>>()
-    val nowPlaying: LiveData<List<Movie>>
+    private val _nowPlaying = MutableLiveData<List<MoviePreview>>()
+    val nowPlaying: LiveData<List<MoviePreview>>
         get() = _nowPlaying
 
     init {

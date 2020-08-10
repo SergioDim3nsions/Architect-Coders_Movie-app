@@ -1,11 +1,11 @@
-package com.dim3nsions.movieapp.ui.model
+package com.dim3nsions.movieapp.network.model
 
 import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
 import kotlinx.android.parcel.Parcelize
 
 @Parcelize
-data class Movie(
+data class MoviePreview(
     @SerializedName("id") val id: Int,
     @SerializedName("title") val title: String,
     @SerializedName("overview") val overview: String,
