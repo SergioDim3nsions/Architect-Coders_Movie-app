@@ -46,7 +46,7 @@ class MovieAdapter(private val listener: MovieAdapterListener) :
 
         fun displayItems(movie: MoviePreview) {
             binding.tvTitle.text = movie.title
-            binding.ivMovie.loadUrl("https://image.tmdb.org/t/p/w185/${movie.posterPath}")
+            binding.ivMovie.loadUrl(movie.posterPath)
         }
     }
 

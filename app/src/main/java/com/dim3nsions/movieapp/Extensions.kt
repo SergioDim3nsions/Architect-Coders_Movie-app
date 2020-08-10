@@ -14,8 +14,15 @@ import com.dim3nsions.movieapp.manager.ImageLoader
 fun ViewGroup.inflate(@LayoutRes resource: Int): View =
     LayoutInflater.from(context).inflate(resource, this, false)
 
-fun ImageView.loadUrl(url: String) {
-    ImageLoader.instance.loadImage(url, this)
+fun ImageView.loadUrl(url: String?, imageType: ImageType = ImageType.POSTER) {
+    url?.let {
+        ImageLoader.instance.loadImage("https://image.tmdb.org/t/p/${imageType.type}/$it", this)
+    }
+}
+
+enum class ImageType(val type: String) {
+    POSTER("w300"),
+    BACKDROP("w780")
 }
 
 inline fun <reified T : Activity> Context.startActivity(vararg pairs: Pair<String, Any?>) {
@@ -23,3 +30,4 @@ inline fun <reified T : Activity> Context.startActivity(vararg pairs: Pair<Strin
         .apply { putExtras(bundleOf(*pairs)) }
         .also(::startActivity)
 }
+

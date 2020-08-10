@@ -3,6 +3,7 @@ package com.dim3nsions.movieapp.ui.detail.ui.detail
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.dim3nsions.movieapp.R
+import com.dim3nsions.movieapp.databinding.MovieDetailActivityBinding
 import com.dim3nsions.movieapp.network.model.MoviePreview
 
 class MovieDetailActivity : AppCompatActivity() {
@@ -13,7 +14,8 @@ class MovieDetailActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.movie_detail_activity)
+        val binding = MovieDetailActivityBinding.inflate(layoutInflater)
+        setContentView(binding.root)
         initFragment()
     }
 
