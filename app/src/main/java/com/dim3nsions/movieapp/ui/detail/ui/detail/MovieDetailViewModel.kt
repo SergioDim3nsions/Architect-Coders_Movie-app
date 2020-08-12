@@ -2,7 +2,6 @@ package com.dim3nsions.movieapp.ui.detail.ui.detail
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.dim3nsions.movieapp.network.model.MoviePreview
 import com.dim3nsions.movieapp.network.repository.MoviesRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch

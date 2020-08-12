@@ -1,33 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/black">
 
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/AppTheme.AppBarOverlay">
+
+        <include
+            android:id="@+id/header"
+            layout="@layout/view_header_detail" />
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
 
-            <include
-                android:id="@+id/header"
-                layout="@layout/view_header_detail" />
-
+            <TextView
+                android:id="@+id/tvSectionOverview"
+                style="@style/SectionText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/size_8"
+                android:text="OverView" />
 
             <TextView
                 android:id="@+id/tvOverview"
+                style="@style/DescriptionText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/size_4"
-                android:layout_marginRight="@dimen/size_4"
-                android:justificationMode="inter_word"
-                android:textColor="@color/white"
-                android:textSize="18sp" />
-
+                android:layout_marginLeft="@dimen/size_8"
+                android:layout_marginRight="@dimen/size_8"
+                android:justificationMode="inter_word" />
 
         </LinearLayout>
 
@@ -36,7 +51,6 @@
 
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
-
 
 
 

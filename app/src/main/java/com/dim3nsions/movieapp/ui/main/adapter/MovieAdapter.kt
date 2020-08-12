@@ -45,7 +45,6 @@ class MovieAdapter(private val listener: MovieAdapterListener) :
         private val binding = ViewMovieItemBinding.bind(view)
 
         fun displayItems(movie: MoviePreview) {
-            binding.tvTitle.text = movie.title
             binding.ivMovie.loadUrl(movie.posterPath)
         }
     }
