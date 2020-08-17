@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -47,6 +48,7 @@ class MainFragment : Fragment() {
 
             override fun onTabSelected(tab: TabLayout.Tab) {
                 adapter.clear()
+                binding.tvSearch.text?.clear()
                 when (tab.position) {
                     0 -> viewModel.getNowPlaying()
                     1 -> viewModel.getPopular()
@@ -55,6 +57,10 @@ class MainFragment : Fragment() {
                 }
             }
         })
+
+        binding.tvSearch.addTextChangedListener {
+            viewModel.getSearchResults(it.toString())
+        }
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {

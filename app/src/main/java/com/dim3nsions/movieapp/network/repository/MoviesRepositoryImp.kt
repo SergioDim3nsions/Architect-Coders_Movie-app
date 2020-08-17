@@ -21,6 +21,7 @@ interface MoviesRepository {
     suspend fun getDetails(movieId: Int): MovieDetail
     suspend fun getCredit(movieId: Int): Credit
     suspend fun getRecommendations(movieId: Int): PaginatedResponse<MoviePreview>
+    suspend fun getSearchResults(query: String): PaginatedResponse<MoviePreview>
 }
 
 class MoviesRepositoryImp(private val restManager: RestManager = RestManager) :
@@ -46,4 +47,7 @@ class MoviesRepositoryImp(private val restManager: RestManager = RestManager) :
 
     override suspend fun getRecommendations(movieId: Int): PaginatedResponse<MoviePreview> =
         restManager.service.getRecommendations(movieId)
+
+    override suspend fun getSearchResults(query: String): PaginatedResponse<MoviePreview> =
+        restManager.service.getSearchResults(query)
 }

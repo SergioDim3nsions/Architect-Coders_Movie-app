@@ -28,16 +28,6 @@ class MovieDetailActivity : AppCompatActivity() {
             .commitNow()
     }
 
-    override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        menuInflater.inflate(R.menu.share_menu, menu)
-        return true
-    }
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when (item.itemId) {
-            android.R.id.home -> onBackPressed()
-        }
-        return super.onOptionsItemSelected(item)
-    }
 
 }

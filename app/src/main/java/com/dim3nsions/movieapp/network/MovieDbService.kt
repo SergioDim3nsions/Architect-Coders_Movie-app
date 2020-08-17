@@ -20,6 +20,13 @@ interface Endpoints {
             const val MOVIE_DETAIL = "movie/{movie_id}"
             const val MOVIE_RECOMMENDATIONS = "movie/{movie_id}/recommendations"
             const val MOVIE_CREDITS = "movie/{movie_id}/credits"
+
+        }
+    }
+
+    interface Search {
+        companion object {
+            const val SEARCH_MOVIE = "search/movie"
         }
     }
 }
@@ -61,6 +68,13 @@ interface MovieDbService {
     @GET(Endpoints.Movies.MOVIE_RECOMMENDATIONS)
     suspend fun getRecommendations(
         @Path("movie_id") movieId: Int,
+        @Query("api_key") apiKey: String = API_KEY
+    ): PaginatedResponse<MoviePreview>
+
+
+    @GET(Endpoints.Search.SEARCH_MOVIE)
+    suspend fun getSearchResults(
+        @Query("query") query: String = "",
         @Query("api_key") apiKey: String = API_KEY
     ): PaginatedResponse<MoviePreview>
 }

@@ -49,6 +49,7 @@ class MovieDetailFragment : Fragment() {
 
         binding.header.toolbar.apply {
             setNavigationIcon(R.drawable.ic_baseline_arrow_back_24)
+            setHasOptionsMenu(true)
             title = ""
         }
 
@@ -78,5 +79,19 @@ class MovieDetailFragment : Fragment() {
                 R.color.white
             )
         )
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.share_menu, menu)
+        //menu.findItem(R.id.action_favorite).setIcon(R.drawable.ic_baseline_favorite_24)
+        super.onCreateOptionsMenu(menu, inflater)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            android.R.id.home -> activity?.onBackPressed()
+            R.id.action_favorite -> item.setIcon(R.drawable.ic_baseline_favorite_24)
+        }
+        return super.onOptionsItemSelected(item)
     }
 }
