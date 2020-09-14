@@ -1,9 +1,9 @@
 package com.dim3nsions.movieapp.network.model
 
 import com.google.gson.annotations.SerializedName
-import kotlinx.android.parcel.Parcelize
 
-data class Credit(
+data class ServerCast(
     @SerializedName("id") val id: Int,
-    @SerializedName("cast") val cast: List<Cast>
+    @SerializedName("name") val name: String,
+    @SerializedName("profile_path") val profilePath: String
 )

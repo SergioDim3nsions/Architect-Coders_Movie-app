@@ -10,13 +10,13 @@ import com.dim3nsions.movieapp.ImageType
 import com.dim3nsions.movieapp.R
 import com.dim3nsions.movieapp.databinding.MovieDetailFragmentBinding
 import com.dim3nsions.movieapp.loadUrl
-import com.dim3nsions.movieapp.network.model.MoviePreview
+import com.dim3nsions.movieapp.ui.model.PresentationMoviePreview
 
 
 class MovieDetailFragment : Fragment() {
 
     companion object {
-        fun newInstance(movie: MoviePreview?): MovieDetailFragment {
+        fun newInstance(movie: PresentationMoviePreview?): MovieDetailFragment {
             val args = Bundle()
             args.putParcelable(MovieDetailActivity.EXTRA_MOVIE, movie)
 
@@ -63,7 +63,8 @@ class MovieDetailFragment : Fragment() {
 
         viewModel = ViewModelProvider(this)[MovieDetailViewModel::class.java]
 
-        val movie = arguments?.getParcelable<MoviePreview>(MovieDetailActivity.EXTRA_MOVIE)
+        val movie =
+            arguments?.getParcelable<PresentationMoviePreview>(MovieDetailActivity.EXTRA_MOVIE)
 
         movie?.id?.let {
             viewModel.getDetails(it)

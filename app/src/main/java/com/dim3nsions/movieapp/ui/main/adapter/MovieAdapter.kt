@@ -2,31 +2,23 @@ package com.dim3nsions.movieapp.ui.main.adapter
 
 import android.view.View
 import android.view.ViewGroup
-import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.dim3nsions.movieapp.R
 import com.dim3nsions.movieapp.databinding.ViewMovieItemBinding
 import com.dim3nsions.movieapp.inflate
 import com.dim3nsions.movieapp.loadUrl
-import com.dim3nsions.movieapp.network.model.MoviePreview
-import kotlin.properties.Delegates
+import com.dim3nsions.movieapp.ui.model.PresentationMoviePreview
 
-typealias MovieAdapterListener = (MoviePreview) -> Unit
+typealias MovieAdapterListener = (PresentationMoviePreview) -> Unit
 
 class MovieAdapter(private val listener: MovieAdapterListener) :
     RecyclerView.Adapter<MovieAdapter.ViewHolder>() {
 
-    var items: List<MoviePreview> by Delegates.observable(emptyList()) { _, old, new ->
-        DiffUtil.calculateDiff(object : DiffUtil.Callback() {
-            override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int) =
-                old[oldItemPosition].id == new[newItemPosition].id
+    private val items: MutableList<PresentationMoviePreview> = mutableListOf()
 
-            override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int) =
-                old[oldItemPosition] == new[newItemPosition]
-
-            override fun getOldListSize() = old.size
-            override fun getNewListSize() = new.size
-        }).dispatchUpdatesTo(this)
+    fun addItems(items: List<PresentationMoviePreview>) {
+        this.items.addAll(items)
+        notifyDataSetChanged()
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =
@@ -44,12 +36,13 @@ class MovieAdapter(private val listener: MovieAdapterListener) :
 
         private val binding = ViewMovieItemBinding.bind(view)
 
-        fun displayItems(movie: MoviePreview) {
+        fun displayItems(movie: PresentationMoviePreview) {
             binding.ivMovie.loadUrl(movie.posterPath)
         }
     }
 
     fun clear() {
-        items = listOf()
+        items.clear()
+        notifyDataSetChanged()
     }
 }

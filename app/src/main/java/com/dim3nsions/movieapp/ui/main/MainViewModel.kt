@@ -4,67 +4,91 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.dim3nsions.movieapp.network.model.MoviePreview
-import com.dim3nsions.movieapp.network.repository.MoviesRepository
-import kotlinx.coroutines.Dispatchers
+import com.dim3nsions.movieapp.db.convertToPresentationMovie
+import com.dim3nsions.movieapp.db.model.DBMoviePreview
+import com.dim3nsions.movieapp.network.model.ServerMoviePreview
+import com.dim3nsions.movieapp.network.repository.*
+import com.dim3nsions.movieapp.ui.model.PresentationMoviePreview
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 
-class MainViewModel(private val moviesRepository: MoviesRepository = MoviesRepository.instance) :
-    ViewModel() {
+class MainViewModel(
+    private val moviesRepository: MoviesRepository = MoviesRepository.instance,
+    private val getNowPlayingRepository: GetNowPlayingRepository = GetNowPlayingRepository.instance,
+    private val getPopularRepository: GetPopularRepository = GetPopularRepository.instance,
+    private val getUpcomingRepository: GetUpcomingRepository = GetUpcomingRepository.instance,
+    private val getTopRatedRepository: GetTopRatedRepository = GetTopRatedRepository.instance,
+    private val getSearchResultRepository: GetSearchRepository = GetSearchRepository.instance
+) : ViewModel() {
 
     val isLoading = MutableLiveData<Boolean>()
 
-    private val _nowPlaying = MutableLiveData<List<MoviePreview>>()
-    val nowPlaying: LiveData<List<MoviePreview>>
-        get() = _nowPlaying
+    private val _movies = MutableLiveData<List<PresentationMoviePreview>>()
+    val movies: LiveData<List<PresentationMoviePreview>>
+        get() = _movies
 
     init {
         getNowPlaying()
     }
 
+    fun resetPages() {
+        getNowPlayingRepository.resetPage()
+        getPopularRepository.resetPage()
+        getUpcomingRepository.resetPage()
+        getTopRatedRepository.resetPage()
+        getSearchResultRepository.resetPage()
+    }
+
     fun getNowPlaying() {
+        if (isLoading.value == true) return
+
         viewModelScope.launch {
             isLoading.value = true
-            val response = withContext(Dispatchers.IO) { moviesRepository.getNowPlaying() }
-            _nowPlaying.postValue(response.results)
+            _movies.value = getNowPlayingRepository.getNowPlaying()
+                .map(DBMoviePreview::convertToPresentationMovie)
             isLoading.value = false
         }
     }
 
     fun getPopular() {
+        if (isLoading.value == true) return
+
         viewModelScope.launch {
             isLoading.value = true
-            val response = withContext(Dispatchers.IO) { moviesRepository.getPopular() }
-            _nowPlaying.postValue(response.results)
+            _movies.value = getPopularRepository.getPopular()
+                .map(DBMoviePreview::convertToPresentationMovie)
             isLoading.value = false
         }
     }
 
     fun getUpcoming() {
+        if (isLoading.value == true) return
+
         viewModelScope.launch {
             isLoading.value = true
-            val response = withContext(Dispatchers.IO) { moviesRepository.getUpcoming() }
-            _nowPlaying.postValue(response.results)
+            _movies.value = getUpcomingRepository.getUpcoming()
+                .map(DBMoviePreview::convertToPresentationMovie)
             isLoading.value = false
         }
     }
 
     fun getTopRated() {
+        if (isLoading.value == true) return
+
         viewModelScope.launch {
             isLoading.value = true
-            val response = withContext(Dispatchers.IO) { moviesRepository.getTopRated() }
-            _nowPlaying.postValue(response.results)
+            _movies.value = getTopRatedRepository.getTopRated()
+                .map(DBMoviePreview::convertToPresentationMovie)
             isLoading.value = false
         }
     }
 
     fun getSearchResults(query: String) {
         if (query.isEmpty()) return
+
         viewModelScope.launch {
             isLoading.value = true
-            val response = withContext(Dispatchers.IO) { moviesRepository.getSearchResults(query) }
-            _nowPlaying.postValue(response.results)
+            _movies.value = getSearchResultRepository.getSearchResult(query)
+                .map(ServerMoviePreview::convertToPresentationMovie)
             isLoading.value = false
         }
     }
