@@ -5,9 +5,11 @@ import com.dim3nsions.movieapp.db.MovieDataBase
 import com.dim3nsions.movieapp.db.MovieSection
 import com.dim3nsions.movieapp.db.convertToDbMovie
 import com.dim3nsions.movieapp.db.model.DBMoviePreview
+import com.dim3nsions.movieapp.manager.LocationManager
 import com.dim3nsions.movieapp.network.RestManager
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import java.util.*
 
 interface GetPopularRepository {
 
@@ -23,7 +25,8 @@ interface GetPopularRepository {
 
 class GetPopularRepositoryImp(
     private val restManager: RestManager = RestManager,
-    private val movieDB: MovieDataBase = MovieAppApplication.movieDB
+    private val movieDB: MovieDataBase = MovieAppApplication.movieDB,
+    private val locationManager: LocationManager = LocationManager.instance
 ) : GetPopularRepository {
 
     private var currentPage = 1
@@ -32,7 +35,11 @@ class GetPopularRepositoryImp(
         withContext(Dispatchers.IO) {
             with(movieDB.movieDao()) {
                 if (popularCount(currentPage) == 0) {
-                    val response = restManager.service.getPopular(page = currentPage)
+                    val response = restManager.service.getPopular(
+                        page = currentPage,
+                        region = locationManager.findLastRegion(),
+                        language = Locale.getDefault().toLanguageTag()
+                    )
                     val dbMovieList = response.results.map { movie ->
                         movie.convertToDbMovie(
                             MovieSection.POPULAR.sectionId,
@@ -43,7 +50,7 @@ class GetPopularRepositoryImp(
                     insertMovies(dbMovieList)
                 }
 
-               val movies = movieDB.movieDao().getPopular(currentPage)
+                val movies = movieDB.movieDao().getPopular(currentPage)
                 currentPage += 1
                 movies
             }

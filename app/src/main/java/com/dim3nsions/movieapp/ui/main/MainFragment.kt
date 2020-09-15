@@ -1,5 +1,6 @@
 package com.dim3nsions.movieapp.ui.main
 
+import android.Manifest
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -11,6 +12,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.dim3nsions.movieapp.databinding.MainFragmentBinding
+import com.dim3nsions.movieapp.manager.AndroidPermissionManager
 import com.dim3nsions.movieapp.startActivity
 import com.dim3nsions.movieapp.ui.detail.ui.detail.MovieDetailActivity
 import com.dim3nsions.movieapp.ui.main.adapter.MovieAdapter
@@ -78,6 +80,16 @@ class MainFragment : Fragment() {
 
             }
         })
+
+        activity?.let {
+            AndroidPermissionManager.instance.requestPermission(
+                it,
+                arrayOf(
+                    Manifest.permission.ACCESS_COARSE_LOCATION,
+                    Manifest.permission.ACCESS_FINE_LOCATION
+                )
+            )
+        }
     }
 
     private fun getMoviesByTabPosition(isScrolled: Boolean = false) {

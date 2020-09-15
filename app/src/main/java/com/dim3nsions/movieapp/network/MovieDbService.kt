@@ -36,25 +36,33 @@ interface MovieDbService {
     @GET(Endpoints.Movies.NOW_PLAYING)
     suspend fun getNowPlaying(
         @Query("api_key") apiKey: String = API_KEY,
-        @Query("page") page: Int = 1
+        @Query("page") page: Int = 1,
+        @Query("region") region: String,
+        @Query("language") language: String
     ): PaginatedResponse<ServerMoviePreview>
 
     @GET(Endpoints.Movies.POPULAR)
     suspend fun getPopular(
         @Query("api_key") apiKey: String = API_KEY,
-        @Query("page") page: Int = 1
+        @Query("page") page: Int = 1,
+        @Query("region") region: String,
+        @Query("language") language: String
     ): PaginatedResponse<ServerMoviePreview>
 
     @GET(Endpoints.Movies.UPCOMING)
     suspend fun getUpcoming(
         @Query("api_key") apiKey: String = API_KEY,
-        @Query("page") page: Int = 1
+        @Query("page") page: Int = 1,
+        @Query("region") region: String,
+        @Query("language") language: String
     ): PaginatedResponse<ServerMoviePreview>
 
     @GET(Endpoints.Movies.TOP_RATED)
     suspend fun getTopRated(
         @Query("api_key") apiKey: String = API_KEY,
-        @Query("page") page: Int = 1
+        @Query("page") page: Int = 1,
+        @Query("region") region: String,
+        @Query("language") language: String
     ): PaginatedResponse<ServerMoviePreview>
 
     @GET(Endpoints.Movies.MOVIE_DETAIL)
@@ -81,6 +89,8 @@ interface MovieDbService {
     suspend fun getSearchResults(
         @Query("query") query: String = "",
         @Query("api_key") apiKey: String = API_KEY,
-        @Query("page") page: Int = 1
+        @Query("page") page: Int = 1,
+        @Query("region") region: String,
+        @Query("language") language: String
     ): PaginatedResponse<ServerMoviePreview>
 }
