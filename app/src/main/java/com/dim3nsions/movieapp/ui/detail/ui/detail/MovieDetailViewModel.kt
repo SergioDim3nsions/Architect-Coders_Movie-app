@@ -12,7 +12,7 @@ import kotlinx.coroutines.withContext
 
 class MovieDetailViewModel(
     private val moviesRepository: MoviesRepository = MoviesRepository.instance,
-    private val getFavoritesRepository: GetFavoritesRepository = GetFavoritesRepository.instance,
+    private val getFavoritesRepository: GetFavoritesRepository = GetFavoritesRepository.instance
 ) : ViewModel() {
 
     var movie = MutableLiveData<PresentationMoviePreview?>()
