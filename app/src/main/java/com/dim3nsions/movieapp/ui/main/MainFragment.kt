@@ -72,7 +72,7 @@ class MainFragment : Fragment() {
 
                     val elementsLeft = totalItemCount - visibleItemCount - firstVisibleItem
                     if (elementsLeft < 2) {
-                        getMoviesByTabPosition()
+                        getMoviesByTabPosition(true)
                     }
                 }
 
@@ -80,12 +80,17 @@ class MainFragment : Fragment() {
         })
     }
 
-    private fun getMoviesByTabPosition() {
+    private fun getMoviesByTabPosition(isScrolled: Boolean = false) {
         when (tabPosition) {
             0 -> viewModel.getNowPlaying()
             1 -> viewModel.getPopular()
             2 -> viewModel.getUpcoming()
             3 -> viewModel.getTopRated()
+            4 -> {
+                if (!isScrolled) {
+                    viewModel.getFavorites()
+                }
+            }
         }
     }
 

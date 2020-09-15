@@ -20,6 +20,7 @@ data class DBMoviePreview(
     val originalTitle: String,
     val genreIds: List<Int> = listOf(),
     val releaseDate: String,
-    val movieSection: Int
+    val movieSection: Int,
+    var isFavorite: Boolean
 )
 

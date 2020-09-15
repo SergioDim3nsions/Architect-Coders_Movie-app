@@ -5,6 +5,7 @@ import android.view.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.dim3nsions.movieapp.ImageType
 import com.dim3nsions.movieapp.R
@@ -27,6 +28,7 @@ class MovieDetailFragment : Fragment() {
     }
 
     private lateinit var viewModel: MovieDetailViewModel
+    private var optionsMenu: Menu? = null
     private var _binding: MovieDetailFragmentBinding? = null
     private val binding: MovieDetailFragmentBinding
         get() = _binding!!
@@ -62,36 +64,53 @@ class MovieDetailFragment : Fragment() {
         }
 
         viewModel = ViewModelProvider(this)[MovieDetailViewModel::class.java]
+        viewModel.movie.value = arguments?.getParcelable(MovieDetailActivity.EXTRA_MOVIE)
+        viewModel.movie.observe(viewLifecycleOwner, Observer {
+            loadView(it)
+        })
 
-        val movie =
-            arguments?.getParcelable<PresentationMoviePreview>(MovieDetailActivity.EXTRA_MOVIE)
+        viewModel.isFavorite.observe(viewLifecycleOwner, Observer { isFavorite ->
+            loadFavoriteIcon(isFavorite)
+        })
+    }
 
-        movie?.id?.let {
-            viewModel.getDetails(it)
-        }
-
-        binding.header.toolbar.title = movie?.title
-        binding.tvOverview.text = movie?.overview
-        binding.header.ivbackDrop.loadUrl(movie?.backdropPath, ImageType.BACKDROP)
-        binding.header.ivPoster.loadUrl(movie?.posterPath)
-        binding.header.toolbar.setTitleTextColor(
-            ContextCompat.getColor(
-                binding.header.toolbar.context,
-                R.color.white
+    private fun loadView(it: PresentationMoviePreview?) {
+        it?.let {
+            binding.header.toolbar.title = it.title
+            binding.tvOverview.text = it.overview
+            binding.header.ivbackDrop.loadUrl(it.backdropPath, ImageType.BACKDROP)
+            binding.header.ivPoster.loadUrl(it.posterPath)
+            binding.header.toolbar.setTitleTextColor(
+                ContextCompat.getColor(
+                    binding.header.toolbar.context,
+                    R.color.white
+                )
             )
-        )
+
+            viewModel.getDetails(it.id)
+        }
+    }
+
+    private fun loadFavoriteIcon(isFavorite: Boolean) {
+        val favoriteIconMenu = optionsMenu?.findItem(R.id.action_favorite)
+        if (isFavorite) {
+            favoriteIconMenu?.setIcon(R.drawable.ic_baseline_favorite_24)
+        } else {
+            favoriteIconMenu?.setIcon(R.drawable.ic_baseline_favorite_border_24)
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.share_menu, menu)
-        //menu.findItem(R.id.action_favorite).setIcon(R.drawable.ic_baseline_favorite_24)
+        optionsMenu = menu
+        viewModel.checkIfMovieIsFavorite()
         super.onCreateOptionsMenu(menu, inflater)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             android.R.id.home -> activity?.onBackPressed()
-            R.id.action_favorite -> item.setIcon(R.drawable.ic_baseline_favorite_24)
+            R.id.action_favorite -> viewModel.updateFavorite()
         }
         return super.onOptionsItemSelected(item)
     }
