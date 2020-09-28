@@ -16,7 +16,7 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".ui.detail.ui.detail.MovieDetailActivity"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/DetailNoActionBar" />
         <activity
             android:name=".ui.main.MainActivity"
             android:theme="@style/AppTheme.NoActionBar">
